@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Aleksandr Sundukov](https://up.htmlacademy.ru/javascript/26/user/1695927).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Лепёшкин](https://htmlacademy.ru/profile/id144641).
 
 ---
 
