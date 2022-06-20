@@ -1,4 +1,2 @@
-import {similarAdvertisement} from './data.js';
-import {getRandomArrayElement} from './util.js';
+import './adGeneration.js';
 
-getRandomArrayElement(similarAdvertisement);
