@@ -36,4 +36,19 @@ const getRandomArrayOfArray = (originalArray) => {
   return newArray;
 };
 
-export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray};
+const switchingOfTypesHousing = (type) => {
+  switch (type) {
+    case 'hotel':
+      return 'Отель';
+    case 'palace':
+      return 'Дворец';
+    case 'house':
+      return 'Дом';
+    case 'bungalow':
+      return 'Бунгало';
+    case 'flat':
+      return 'Квартира';
+  }
+};
+
+export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing};

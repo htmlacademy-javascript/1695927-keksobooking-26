@@ -75,6 +75,24 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
+const rooms = getRandomInteger(1, 112);
+
+const guests = rooms*2;
+
+const price = getRandomInteger(5, 15000);
+
+const digit =5;
+
+const Lat = {
+  MIN : 35.65000,
+  MAX : 35.70000
+};
+
+const Lng = {
+  MIN : 139.70000,
+  MAX : 139.80000
+};
+
 const createAdvertisement = () => (
   {
     author : {
@@ -82,11 +100,11 @@ const createAdvertisement = () => (
     },
     offer : {
       title : getRandomArrayElement(TITLES),
-      address : `${getRandom(35.65000, 35.70000, 5)} ${getRandom(139.70000, 139.80000, 5)}`,
-      price : getRandomInteger(3000, 1500000),
+      address : `${getRandom(Lat.MIN, Lat.MAX, digit)} , ${getRandom(Lng.MIN, Lng.MAX, digit)}`,
+      price : price,
       type : getRandomArrayElement(TYPES),
-      rooms : getRandomInteger(1, 112),
-      guests : getRandomInteger(1, 89),
+      rooms : rooms,
+      guests : guests,
       checkin : getRandomArrayElement(CHECKINS),
       checkout : getRandomArrayElement(CHECKOUTS),
       features : getRandomArrayOfArray(FEATURES),
@@ -94,12 +112,12 @@ const createAdvertisement = () => (
       photos : getRandomArrayOfArray(PHOTOS),
     },
     location : {
-      lat : getRandom(35.65000, 35.70000, 5),
-      lng : getRandom(139.70000, 139.80000, 5)
+      lat : getRandom(Lat.MIN, Lat.MAX, digit),
+      lng : getRandom(Lng.MIN, Lng.MAX, digit)
     }
   }
 );
 
-const similarAdvertisement = Array.from({length : SIMILAR_ADVERTISEMENT_COUNT}, createAdvertisement);
+const similarAdvertisement = () => Array.from({length : SIMILAR_ADVERTISEMENT_COUNT}, createAdvertisement);
 
 export {similarAdvertisement};
