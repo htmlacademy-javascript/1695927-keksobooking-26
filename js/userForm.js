@@ -1,5 +1,7 @@
 const adForm =  document.querySelector('.ad-form');
 const MAX_PRICE = 100000;
+const MIN_LENGTH = 30;
+const MAX_LENGTH = 100;
 
 const RoomsValue = {
   ONE : '1',
@@ -26,10 +28,10 @@ const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
   errorTextTag: 'div',
-}, false);
+}, true);
 
 const validateTitle = (value) => (
-  value.length >= 30 && value.length <= 100
+  value.length >= MIN_LENGTH && value.length <= MAX_LENGTH
 );
 
 pristine.addValidator(
@@ -45,7 +47,7 @@ const validatePrice = (value) => (
 pristine.addValidator(
   adForm.querySelector('#price'),
   validatePrice,
-  'Цена за одну ночь не может быть больше 100000'
+  'Цена за одну ночь не может быть больше 100000 руб.'
 );
 
 const roomsField = document.querySelector('#room_number');
