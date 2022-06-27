@@ -51,4 +51,21 @@ const switchingOfTypesHousing = (type) => {
   }
 };
 
-export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing};
+const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
+  switch (true) {
+    case num === 1:
+      return nominative;
+    case num >=2 && num <=4:
+      return genitiveSingular;
+    case num>=5 && num <=20:
+      return genitivePlural;
+    case num === 21:
+      return nominative;
+    case num >=22 && num <=24:
+      return genitiveSingular;
+    case num >=25:
+      return genitivePlural;
+  }
+};
+
+export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing,numDecline};

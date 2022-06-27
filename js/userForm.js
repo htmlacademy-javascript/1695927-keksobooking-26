@@ -1,5 +1,26 @@
 const adForm =  document.querySelector('.ad-form');
-const maxPrice = 100000;
+const MAX_PRICE = 100000;
+
+const RoomsValue = {
+  ONE : '1',
+  TWO: '2',
+  THREE: '3',
+  HUNDRED : '100'
+};
+
+const CapacityValue = {
+  ONE : '1',
+  TWO: '2',
+  THREE: '3',
+  UNAVAILABLE: '0'
+};
+
+const ROOM_GUEST_CAPACITY = {
+  [RoomsValue.ONE] : CapacityValue.ONE,
+  [RoomsValue.TWO] : [CapacityValue.ONE, CapacityValue.TWO],
+  [RoomsValue.THREE] : [CapacityValue.ONE, CapacityValue.TWO, CapacityValue.THREE],
+  [RoomsValue.HUNDRED] : CapacityValue.UNAVAILABLE,
+};
 
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
@@ -18,7 +39,7 @@ pristine.addValidator(
 );
 
 const validatePrice = (value) => (
-  value <= maxPrice
+  value <= MAX_PRICE
 );
 
 pristine.addValidator(
@@ -31,12 +52,12 @@ const roomsField = document.querySelector('#room_number');
 const guestsField = document.querySelector('#capacity');
 
 const validateRooms = () => (
-  roomsField.value >= guestsField.value
+  ROOM_GUEST_CAPACITY[roomsField.value].includes(guestsField.value)
 );
 
 const getRoomsErrorMessage = () =>  (
-  `Несопоставимое количество комнат и гостей
-`);
+  Number(roomsField.value) === Number(RoomsValue.HUNDRED) ? 'Комнаты не для гостей' : 'Недостаточно места для размещения всех гостей'
+);
 
 pristine.addValidator(guestsField, validateRooms, getRoomsErrorMessage);
 
