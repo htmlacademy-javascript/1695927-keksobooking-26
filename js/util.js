@@ -51,4 +51,15 @@ const switchingOfTypesHousing = (type) => {
   }
 };
 
-export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing};
+const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
+  switch (true) {
+    case (num % 100 >= 11 && num % 100 <= 20) || (num % 10 >=5 && num % 10 <= 9) || (num % 10 === 0):
+      return genitivePlural;
+    case num % 10 === 1:
+      return nominative;
+    case num % 10 >=2 && num % 10 <=4:
+      return genitiveSingular;
+  }
+};
+
+export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing,numDecline};
