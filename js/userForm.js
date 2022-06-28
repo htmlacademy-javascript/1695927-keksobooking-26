@@ -79,7 +79,7 @@ pristine.addValidator(
 );
 
 const validatePrice = (value) => (
-  value <= MAX_PRICE && value >= priceField.min
+  value <= MAX_PRICE && value >= Number(priceField.min)
 );
 
 pristine.addValidator(
