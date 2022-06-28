@@ -2,6 +2,17 @@ const adForm =  document.querySelector('.ad-form');
 const MAX_PRICE = 100000;
 const MIN_LENGTH = 30;
 const MAX_LENGTH = 100;
+const MIN_VALUE_BUNGALOW = 0;
+const MIN_VALUE_FLAT = 1000;
+const MIN_VALUE_HOTEL = 3000;
+const MIN_VALUE_HOUSE = 5000;
+const MIN_VALUE_PALACE = 10000;
+const priceField = adForm.querySelector('#price');
+const timeInSelect = adForm.querySelector('#timein');
+const timeOutSelect = adForm.querySelector('#timeout');
+const roomsField = adForm.querySelector('#room_number');
+const guestsField = adForm.querySelector('#capacity');
+const typeField = adForm.querySelector('#type');
 
 const RoomsValue = {
   ONE : '1',
@@ -30,6 +41,33 @@ const pristine = new Pristine(adForm, {
   errorTextTag: 'div',
 }, true);
 
+const changePriceFromType = (type) => {
+  switch (type) {
+    case 'bungalow':
+      priceField.min = MIN_VALUE_BUNGALOW;
+      priceField.placeholder = MIN_VALUE_BUNGALOW;
+      break;
+    case 'flat':
+      priceField.min = MIN_VALUE_FLAT;
+      priceField.placeholder = MIN_VALUE_FLAT;
+      break;
+    case 'hotel':
+      priceField.min = MIN_VALUE_HOTEL;
+      priceField.placeholder = MIN_VALUE_HOTEL;
+      break;
+    case 'house':
+      priceField.min = MIN_VALUE_HOUSE;
+      priceField.placeholder = MIN_VALUE_HOUSE;
+      break;
+    case 'palace':
+      priceField.min = MIN_VALUE_PALACE;
+      priceField.placeholder = MIN_VALUE_PALACE;
+      break;
+  }
+};
+
+changePriceFromType(typeField.value);
+
 const validateTitle = (value) => (
   value.length >= MIN_LENGTH && value.length <= MAX_LENGTH
 );
@@ -41,17 +79,14 @@ pristine.addValidator(
 );
 
 const validatePrice = (value) => (
-  value <= MAX_PRICE
+  value <= MAX_PRICE && value >= priceField.min
 );
 
 pristine.addValidator(
-  adForm.querySelector('#price'),
+  priceField,
   validatePrice,
-  'Цена за одну ночь не может быть больше 100000 руб.'
+  'Неподходящее значение цены'
 );
-
-const roomsField = document.querySelector('#room_number');
-const guestsField = document.querySelector('#capacity');
 
 const validateRooms = () => (
   ROOM_GUEST_CAPACITY[roomsField.value].includes(guestsField.value)
@@ -62,6 +97,19 @@ const getRoomsErrorMessage = () =>  (
 );
 
 pristine.addValidator(guestsField, validateRooms, getRoomsErrorMessage);
+
+typeField.addEventListener('change', () =>{
+  changePriceFromType(typeField.value);
+});
+
+
+timeInSelect.addEventListener('change', () => {
+  timeOutSelect.value = timeInSelect.value;
+});
+
+timeOutSelect.addEventListener('change', () => {
+  timeInSelect.value = timeOutSelect.value;
+});
 
 adForm.addEventListener('submit', (evt)=>{
   evt.preventDefault();
