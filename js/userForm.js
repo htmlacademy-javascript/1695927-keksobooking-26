@@ -111,6 +111,6 @@ timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
 
-adForm.addEventListener('submit', (evt)=>{
+adForm.addEventListener('submit', ()=>{
   pristine.validate();
 });
