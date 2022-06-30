@@ -53,11 +53,11 @@ const switchingOfTypesHousing = (type) => {
 
 const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
   switch (true) {
-    case (num % 100 >= 11 && num % 100 <= 20) || (num % 10 >=5 && num % 10 <= 9) || (num % 10 === 0):
+    case (num % 100 > 10 && num % 100 < 21) || (num % 10 > 4 && num % 10 < 10) || (num % 10 === 0):
       return genitivePlural;
     case num % 10 === 1:
       return nominative;
-    case num % 10 >=2 && num % 10 <=4:
+    case num % 10 > 1 && num % 10 < 5:
       return genitiveSingular;
   }
 };

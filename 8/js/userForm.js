@@ -69,7 +69,7 @@ const changePriceFromType = (type) => {
 changePriceFromType(typeField.value);
 
 const validateTitle = (value) => (
-  value.length >= MIN_LENGTH && value.length <= MAX_LENGTH
+  value.length > MIN_LENGTH-1 && value.length < MAX_LENGTH+1
 );
 
 pristine.addValidator(
@@ -79,7 +79,7 @@ pristine.addValidator(
 );
 
 const validatePrice = (value) => (
-  value <= MAX_PRICE && value >= Number(priceField.min)
+  value < MAX_PRICE+1 && value > Number(priceField.min)-1
 );
 
 pristine.addValidator(
@@ -111,7 +111,6 @@ timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
 
-adForm.addEventListener('submit', (evt)=>{
-  evt.preventDefault();
+adForm.addEventListener('submit', ()=>{
   pristine.validate();
 });
