@@ -8,18 +8,11 @@ const elementDisable = () => {
   });
 };
 
-const pageDisable = () => {
-  adForm.classList.add('ad-form--disabled');
-  mapFilter.classList.add('.map__filters--disabled');
+const pageActivator = () => {
+  adForm.classList.toggle('ad-form--disabled');
+  mapFilter.classList.toggle('.map__filters--disabled');
   elementDisable();
 };
 
-const pageActivate = () => {
-  adForm.classList.remove('ad-form--disabled');
-  mapFilter.classList.remove('.map__filters--disabled');
-  elementDisable();
-};
-
-pageDisable();
-
-pageActivate();
+pageActivator();
+pageActivator();
