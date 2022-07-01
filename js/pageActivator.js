@@ -15,4 +15,4 @@ const pageActivator = () => {
 };
 
 pageActivator();
-pageActivator();
+export {pageActivator};
