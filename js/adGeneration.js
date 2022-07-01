@@ -1,13 +1,9 @@
 import {similarAdvertisement} from './data.js';
 import {switchingOfTypesHousing} from './util.js';
 
-const adList = document.querySelector('#map-canvas');
-
 const adTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const adsSimilar = similarAdvertisement();
-
-const adFragment = document.createDocumentFragment();
 
 const getOffers = (({offer,author} ) => {
   const adElement = adTemplate.cloneNode(true);
@@ -85,6 +81,4 @@ const getOffers = (({offer,author} ) => {
   return(adElement);
 });
 
-const generateOffers = adsSimilar.map(getOffers);
-adFragment.appendChild(generateOffers[0]);
-adList.appendChild(adFragment);
+export {adsSimilar, getOffers};

@@ -13,6 +13,11 @@ const timeOutSelect = adForm.querySelector('#timeout');
 const roomsField = adForm.querySelector('#room_number');
 const guestsField = adForm.querySelector('#capacity');
 const typeField = adForm.querySelector('#type');
+const addressField = adForm.querySelector('#address');
+
+const setAddressFieldValue = (value) => {
+  addressField.value = value;
+};
 
 const RoomsValue = {
   ONE : '1',
@@ -114,3 +119,5 @@ timeOutSelect.addEventListener('change', () => {
 adForm.addEventListener('submit', ()=>{
   pristine.validate();
 });
+
+export {setAddressFieldValue, priceField};

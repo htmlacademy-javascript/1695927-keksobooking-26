@@ -62,4 +62,8 @@ const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
   }
 };
 
-export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing,numDecline};
+const getAddress = ({ lat, lng }) => (
+  `${lat.toFixed(5)}, ${lng.toFixed(5)}`
+);
+
+export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing,numDecline, getAddress};
