@@ -1,3 +1,7 @@
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage } from './util.js';
+import {resetAddress} from './map.js';
+
 const adForm =  document.querySelector('.ad-form');
 const MAX_PRICE = 100000;
 const MIN_LENGTH = 30;
@@ -14,6 +18,7 @@ const roomsField = adForm.querySelector('#room_number');
 const guestsField = adForm.querySelector('#capacity');
 const typeField = adForm.querySelector('#type');
 const addressField = adForm.querySelector('#address');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 const setAddressFieldValue = (value) => {
   addressField.value = value;
@@ -119,5 +124,33 @@ timeOutSelect.addEventListener('change', () => {
 adForm.addEventListener('submit', ()=>{
   pristine.validate();
 });
+
+const onSubmitAdForm = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+const resetForm = () => {
+  adForm.reset();
+  resetAddress();
+};
+
+resetForm();
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
+
+onSubmitAdForm(() => {
+  showSuccessMessage();
+  resetForm();
+}, showErrorMessage);
 
 export {setAddressFieldValue, priceField};

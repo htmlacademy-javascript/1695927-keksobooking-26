@@ -1,10 +1,13 @@
 import {pageActivator} from './pageActivator.js';
-import {getAddress} from './util.js';
+import {getAddress, showErrorMessage} from './util.js';
 import {setAddressFieldValue} from './userForm.js';
-import {adsSimilar, getOffers} from './adGeneration.js';
+import {getOffers} from './adGeneration.js';
+import {getData} from './api.js';
 
+let offersData;
 const TOKYO = { lat: 35.65283, lng: 139.83948 };
 const MAP_ZOOM = 12;
+const MAX_OFFERS = 10;
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -53,6 +56,11 @@ marker.on('moveend', (evt) => {
   setAddressFieldValue(getAddress(evt.target.getLatLng()));
 });
 
+const resetAddress = () => {
+  marker.setLatLng(TOKYO);
+  map.setView(TOKYO, MAP_ZOOM);
+};
+
 const renderOffers = (offers) => {
   offers.forEach((offer)=>{
     L.marker({
@@ -65,5 +73,15 @@ const renderOffers = (offers) => {
   });
 };
 
-renderOffers(adsSimilar);
+const onSuccess = (data) => {
+  offersData = data.slice();
+  renderOffers(offersData.slice(0, MAX_OFFERS));
+};
 
+const onFail = () => {
+  showErrorMessage();
+};
+
+getData(onSuccess, onFail);
+
+export {resetAddress};
