@@ -2,21 +2,14 @@ import {pageActivator} from './pageActivator.js';
 import {getAddress, showErrorMessage} from './util.js';
 import {setAddressFieldValue} from './userForm.js';
 import {getOffers} from './adGeneration.js';
-import {getData} from './api.js';
+import {doRequest} from './api.js';
 
 let offersData;
 const TOKYO = { lat: 35.65283, lng: 139.83948 };
 const MAP_ZOOM = 12;
 const MAX_OFFERS = 10;
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    pageActivator();
-  })
-  .setView({
-    lat: TOKYO.lat,
-    lng: TOKYO.lng,
-  },MAP_ZOOM);
+const map = L.map('map-canvas');
 
 const layerGroup = L.layerGroup().addTo(map);
 
@@ -82,6 +75,13 @@ const onFail = () => {
   showErrorMessage();
 };
 
-getData(onSuccess, onFail);
+map.on('load', () => {
+  pageActivator();
+  doRequest(onSuccess, onFail, 'GET');
+})
+  .setView({
+    lat: TOKYO.lat,
+    lng: TOKYO.lng,
+  },MAP_ZOOM);
 
 export {resetAddress};

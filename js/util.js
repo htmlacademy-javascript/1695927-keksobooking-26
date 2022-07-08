@@ -77,16 +77,15 @@ const closePopup = () => {
   if (document.querySelector('.error')) {
     document.querySelector('.error').remove();
   }
-  //document.removeEventListener('keydown', onPopupEscKeydown);
-  //document.removeEventListener('keydown', onPopupClick);
+  document.removeEventListener('keydown', onPopupEscKeydown);
 };
 
-const onPopupEscKeydown = (evt) => {
+function onPopupEscKeydown(evt) {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closePopup();
   }
-};
+}
 
 const onPopupClick = () => {
   closePopup();

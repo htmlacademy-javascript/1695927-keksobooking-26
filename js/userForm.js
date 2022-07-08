@@ -1,4 +1,4 @@
-import {sendData} from './api.js';
+import {doRequest} from './api.js';
 import {showSuccessMessage, showErrorMessage } from './util.js';
 import {resetAddress} from './map.js';
 
@@ -121,23 +121,24 @@ timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
 
-adForm.addEventListener('submit', ()=>{
-  pristine.validate();
-});
 
 const onSubmitAdForm = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    sendData(
-      () => onSuccess(),
-      () => onFail(),
-      new FormData(evt.target),
-    );
+    if (pristine.validate()) {
+      doRequest(
+        () => onSuccess(),
+        () => onFail(),
+        'POST',
+        new FormData(evt.target),
+      );
+    }
   });
 };
 
 const resetForm = () => {
   adForm.reset();
+  changePriceFromType(typeField.value);
   resetAddress();
 };
 
@@ -151,6 +152,6 @@ resetButton.addEventListener('click', (evt) => {
 onSubmitAdForm(() => {
   showSuccessMessage();
   resetForm();
-}, showErrorMessage);
+}, ()=> showErrorMessage());
 
 export {setAddressFieldValue, priceField};
