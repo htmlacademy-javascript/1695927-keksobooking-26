@@ -1,9 +1,6 @@
-import {similarAdvertisement} from './data.js';
 import {switchingOfTypesHousing} from './util.js';
 
 const adTemplate = document.querySelector('#card').content.querySelector('.popup');
-
-const adsSimilar = similarAdvertisement();
 
 const getOffers = (({offer,author} ) => {
   const adElement = adTemplate.cloneNode(true);
@@ -81,4 +78,4 @@ const getOffers = (({offer,author} ) => {
   return(adElement);
 });
 
-export {adsSimilar, getOffers};
+export {getOffers};

@@ -1,19 +1,15 @@
 import {pageActivator} from './pageActivator.js';
-import {getAddress} from './util.js';
+import {getAddress, showErrorMessage} from './util.js';
 import {setAddressFieldValue} from './userForm.js';
-import {adsSimilar, getOffers} from './adGeneration.js';
+import {getOffers} from './adGeneration.js';
+import {doRequest} from './api.js';
 
+let offersData;
 const TOKYO = { lat: 35.65283, lng: 139.83948 };
 const MAP_ZOOM = 12;
+const MAX_OFFERS = 10;
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    pageActivator();
-  })
-  .setView({
-    lat: TOKYO.lat,
-    lng: TOKYO.lng,
-  },MAP_ZOOM);
+const map = L.map('map-canvas');
 
 const layerGroup = L.layerGroup().addTo(map);
 
@@ -53,6 +49,11 @@ marker.on('moveend', (evt) => {
   setAddressFieldValue(getAddress(evt.target.getLatLng()));
 });
 
+const resetAddress = () => {
+  marker.setLatLng(TOKYO);
+  map.setView(TOKYO, MAP_ZOOM);
+};
+
 const renderOffers = (offers) => {
   offers.forEach((offer)=>{
     L.marker({
@@ -65,5 +66,22 @@ const renderOffers = (offers) => {
   });
 };
 
-renderOffers(adsSimilar);
+const onSuccess = (data) => {
+  offersData = data.slice();
+  renderOffers(offersData.slice(0, MAX_OFFERS));
+};
 
+const onFail = () => {
+  showErrorMessage();
+};
+
+map.on('load', () => {
+  pageActivator();
+  doRequest(onSuccess, onFail, 'GET');
+})
+  .setView({
+    lat: TOKYO.lat,
+    lng: TOKYO.lng,
+  },MAP_ZOOM);
+
+export {resetAddress};
