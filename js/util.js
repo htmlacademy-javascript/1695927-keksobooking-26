@@ -112,4 +112,12 @@ const showErrorMessage = (message) => {
   document.addEventListener('click', onPopupClick);
 };
 
-export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing,numDecline, getAddress,showErrorMessage, showSuccessMessage};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {getRandomInteger , getRandom , getRandomArrayElement , getRandomArrayOfArray, switchingOfTypesHousing,numDecline, getAddress,showErrorMessage, showSuccessMessage,debounce};
