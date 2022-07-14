@@ -1,13 +1,16 @@
 import {pageActivator} from './pageActivator.js';
-import {getAddress, showErrorMessage} from './util.js';
+import {getAddress, showErrorMessage, debounce} from './util.js';
 import {setAddressFieldValue} from './userForm.js';
 import {getOffers} from './adGeneration.js';
 import {doRequest} from './api.js';
+import {filterOffers} from './filter.js';
 
 let offersData;
 const TOKYO = { lat: 35.65283, lng: 139.83948 };
 const MAP_ZOOM = 12;
 const MAX_OFFERS = 10;
+const RENDER_DELAY = 500;
+const filterForm = document.querySelector('.map__filters');
 
 const map = L.map('map-canvas');
 
@@ -66,9 +69,24 @@ const renderOffers = (offers) => {
   });
 };
 
+const removeMapPin = () => {
+  layerGroup.clearLayers();
+};
+
+const onFilterChange = debounce(() => {
+  removeMapPin();
+  renderOffers(filterOffers(offersData));
+}, RENDER_DELAY);
+
+const onFilterReset = () => {
+  onFilterChange();
+};
+
 const onSuccess = (data) => {
   offersData = data.slice();
   renderOffers(offersData.slice(0, MAX_OFFERS));
+  filterForm.addEventListener('change', onFilterChange);
+  filterForm.addEventListener('reset', onFilterReset);
 };
 
 const onFail = () => {
@@ -84,4 +102,4 @@ map.on('load', () => {
     lng: TOKYO.lng,
   },MAP_ZOOM);
 
-export {resetAddress};
+export {resetAddress, MAX_OFFERS};
