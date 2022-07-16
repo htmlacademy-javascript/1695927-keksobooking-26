@@ -1,5 +1,5 @@
 import {pageActivator} from './pageActivator.js';
-import {getAddress, showErrorMessage, debounce} from './util.js';
+import {getAddress, onError, debounce} from './util.js';
 import {setAddressFieldValue} from './userForm.js';
 import {getOffers} from './adGeneration.js';
 import {doRequest} from './api.js';
@@ -89,13 +89,9 @@ const onSuccess = (data) => {
   filterForm.addEventListener('reset', onFilterReset);
 };
 
-const onFail = () => {
-  showErrorMessage();
-};
-
 map.on('load', () => {
   pageActivator();
-  doRequest(onSuccess, onFail, 'GET');
+  doRequest(onSuccess, onError, 'GET');
 })
   .setView({
     lat: TOKYO.lat,

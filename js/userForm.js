@@ -1,8 +1,8 @@
 import {doRequest} from './api.js';
 import {showSuccessMessage, showErrorMessage } from './util.js';
 import {resetAddress} from './map.js';
+import {previewHousingPhotoChooser, previewAvatarContainer} from './photo.js';
 
-const adForm =  document.querySelector('.ad-form');
 const MAX_PRICE = 100000;
 const MIN_LENGTH = 30;
 const MAX_LENGTH = 100;
@@ -11,6 +11,8 @@ const MIN_VALUE_FLAT = 1000;
 const MIN_VALUE_HOTEL = 3000;
 const MIN_VALUE_HOUSE = 5000;
 const MIN_VALUE_PALACE = 10000;
+const PREVIEW_FIRST_STARTING = 'img/muffin-grey.svg';
+const adForm =  document.querySelector('.ad-form');
 const priceField = adForm.querySelector('#price');
 const timeInSelect = adForm.querySelector('#timein');
 const timeOutSelect = adForm.querySelector('#timeout');
@@ -19,6 +21,7 @@ const guestsField = adForm.querySelector('#capacity');
 const typeField = adForm.querySelector('#type');
 const addressField = adForm.querySelector('#address');
 const resetButton = adForm.querySelector('.ad-form__reset');
+const filterForm = document.querySelector('.map__filters');
 
 const setAddressFieldValue = (value) => {
   addressField.value = value;
@@ -140,6 +143,9 @@ const resetForm = () => {
   adForm.reset();
   changePriceFromType(typeField.value);
   resetAddress();
+  previewAvatarContainer.src = PREVIEW_FIRST_STARTING;
+  previewHousingPhotoChooser.innerHTML = '';
+  filterForm.reset();
 };
 
 resetForm();
