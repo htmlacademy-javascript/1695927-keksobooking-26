@@ -14,5 +14,9 @@ const pageActivator = () => {
   elementDisable();
 };
 
+const filterActivator = () =>{
+  elementDisable();
+};
+
 pageActivator();
-export {pageActivator};
+export {pageActivator, filterActivator};
