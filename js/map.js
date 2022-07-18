@@ -1,7 +1,7 @@
 import {pageActivator} from './pageActivator.js';
 import {getAddress, onError, debounce} from './util.js';
 import {setAddressFieldValue} from './userForm.js';
-import {getOffers} from './adGeneration.js';
+import {renderCard} from './card.js';
 import {doRequest} from './api.js';
 import {filterOffers} from './filter.js';
 
@@ -65,7 +65,7 @@ const renderOffers = (offers) => {
     },{
       icon: pinIcon,
     }).addTo(layerGroup)
-      .bindPopup(getOffers(offer));
+      .bindPopup(renderCard(offer));
   });
 };
 

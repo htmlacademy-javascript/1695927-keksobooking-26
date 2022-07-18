@@ -18,5 +18,4 @@ const filterActivator = () =>{
   elementDisable();
 };
 
-pageActivator();
 export {pageActivator, filterActivator};

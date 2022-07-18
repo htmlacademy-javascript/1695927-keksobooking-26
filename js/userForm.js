@@ -2,6 +2,8 @@ import {doRequest} from './api.js';
 import {showSuccessMessage, showErrorMessage } from './util.js';
 import {resetAddress} from './map.js';
 import {previewHousingPhotoChooser, previewAvatarContainer} from './photo.js';
+import {sliderElement} from './priceSlider.js';
+import {priceField} from './elementsOfDom.js';
 
 const MAX_PRICE = 100000;
 const MIN_LENGTH = 30;
@@ -13,7 +15,6 @@ const MIN_VALUE_HOUSE = 5000;
 const MIN_VALUE_PALACE = 10000;
 const PREVIEW_FIRST_STARTING = 'img/muffin-grey.svg';
 const adForm =  document.querySelector('.ad-form');
-const priceField = adForm.querySelector('#price');
 const timeInSelect = adForm.querySelector('#timein');
 const timeOutSelect = adForm.querySelector('#timeout');
 const roomsField = adForm.querySelector('#room_number');
@@ -41,7 +42,7 @@ const CapacityValue = {
   UNAVAILABLE: '0'
 };
 
-const ROOM_GUEST_CAPACITY = {
+const roomGuestCapacity = {
   [RoomsValue.ONE] : CapacityValue.ONE,
   [RoomsValue.TWO] : [CapacityValue.ONE, CapacityValue.TWO],
   [RoomsValue.THREE] : [CapacityValue.ONE, CapacityValue.TWO, CapacityValue.THREE],
@@ -102,7 +103,7 @@ pristine.addValidator(
 );
 
 const validateRooms = () => (
-  ROOM_GUEST_CAPACITY[roomsField.value].includes(guestsField.value)
+  roomGuestCapacity[roomsField.value].includes(guestsField.value)
 );
 
 const getRoomsErrorMessage = () =>  (
@@ -123,7 +124,6 @@ timeInSelect.addEventListener('change', () => {
 timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
-
 
 const onSubmitAdForm = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
@@ -146,6 +146,7 @@ const resetForm = () => {
   previewAvatarContainer.src = PREVIEW_FIRST_STARTING;
   previewHousingPhotoChooser.innerHTML = '';
   filterForm.reset();
+  sliderElement.noUiSlider.set(0);
 };
 
 resetForm();
@@ -160,4 +161,4 @@ onSubmitAdForm(() => {
   resetForm();
 }, ()=> showErrorMessage());
 
-export {setAddressFieldValue, priceField};
+export {setAddressFieldValue};

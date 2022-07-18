@@ -1,4 +1,4 @@
-import {priceField} from './userForm.js';
+import {priceField} from './elementsOfDom.js';
 
 const minSliderValue = 0;
 const maxSliderValue = 100000;
@@ -22,7 +22,12 @@ noUiSlider.create(sliderElement,{
   },
 });
 
-sliderElement.noUiSlider.on('set', () => {
+priceField.addEventListener('input',()=>{
+  sliderElement.noUiSlider.set(priceField.value);
+});
+
+sliderElement.noUiSlider.on('change', () => {
   priceField.value = sliderElement.noUiSlider.get();
 });
 
+export {sliderElement};
