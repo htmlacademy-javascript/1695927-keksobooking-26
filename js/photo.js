@@ -1,23 +1,23 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const avatarChooser  =  document.querySelector('.ad-form-header__input');
-const previewAvatarContainer = document.querySelector('.avatar__preview');
-const housingPhotoChooser = document.querySelector('.ad-form__input');
-const previewHousingPhotoChooser = document.querySelector('.ad-form__photo');
+const avatarChooserElement  =  document.querySelector('.ad-form-header__input');
+const previewAvatarContainerElement = document.querySelector('.avatar__preview');
+const housingPhotoChooserElement = document.querySelector('.ad-form__input');
+const previewHousingPhotoChooserElement = document.querySelector('.ad-form__photo');
 
-avatarChooser.addEventListener('change', () => {
-  const file = avatarChooser.files[0];
+avatarChooserElement.addEventListener('change', () => {
+  const file = avatarChooserElement.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if(matches) {
-    previewAvatarContainer.src = URL.createObjectURL(file);
+    previewAvatarContainerElement.src = URL.createObjectURL(file);
   }
 });
 
-housingPhotoChooser.addEventListener('change', () => {
-  const file = housingPhotoChooser.files[0];
+housingPhotoChooserElement.addEventListener('change', () => {
+  const file = housingPhotoChooserElement.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -31,8 +31,8 @@ housingPhotoChooser.addEventListener('change', () => {
     photoPreview.style.height = '44px';
     photoPreview.style.display = 'block';
     photoPreview.style.margin = '13px auto';
-    previewHousingPhotoChooser.append(photoPreview);
+    previewHousingPhotoChooserElement.append(photoPreview);
   }
 });
 
-export {previewAvatarContainer, previewHousingPhotoChooser};
+export {previewAvatarContainerElement, previewHousingPhotoChooserElement};

@@ -1,9 +1,9 @@
 import {doRequest} from './api.js';
 import {showSuccessMessage, showErrorMessage } from './util.js';
 import {resetAddress} from './map.js';
-import {previewHousingPhotoChooser, previewAvatarContainer} from './photo.js';
-import {sliderElement} from './priceSlider.js';
-import {priceField} from './elementsOfDom.js';
+import {previewHousingPhotoChooserElement, previewAvatarContainerElement} from './photo.js';
+import {sliderElement} from './price-slider.js';
+import {priceFieldElement} from './elements-of-dom.js';
 
 const MAX_PRICE = 100000;
 const MIN_LENGTH = 30;
@@ -15,17 +15,17 @@ const MIN_VALUE_HOUSE = 5000;
 const MIN_VALUE_PALACE = 10000;
 const PREVIEW_FIRST_STARTING = 'img/muffin-grey.svg';
 const adForm =  document.querySelector('.ad-form');
-const timeInSelect = adForm.querySelector('#timein');
-const timeOutSelect = adForm.querySelector('#timeout');
-const roomsField = adForm.querySelector('#room_number');
-const guestsField = adForm.querySelector('#capacity');
-const typeField = adForm.querySelector('#type');
-const addressField = adForm.querySelector('#address');
-const resetButton = adForm.querySelector('.ad-form__reset');
-const filterForm = document.querySelector('.map__filters');
+const timeInSelectElement = adForm.querySelector('#timein');
+const timeOutSelectElement = adForm.querySelector('#timeout');
+const roomsFieldElement = adForm.querySelector('#room_number');
+const guestsFieldElement = adForm.querySelector('#capacity');
+const typeFieldElement = adForm.querySelector('#type');
+const addressFieldElement = adForm.querySelector('#address');
+const resetButtonElement = adForm.querySelector('.ad-form__reset');
+const filterFormElement = document.querySelector('.map__filters');
 
 const setAddressFieldValue = (value) => {
-  addressField.value = value;
+  addressFieldElement.value = value;
 };
 
 const RoomsValue = {
@@ -58,29 +58,29 @@ const pristine = new Pristine(adForm, {
 const changePriceFromType = (type) => {
   switch (type) {
     case 'bungalow':
-      priceField.min = MIN_VALUE_BUNGALOW;
-      priceField.placeholder = MIN_VALUE_BUNGALOW;
+      priceFieldElement.min = MIN_VALUE_BUNGALOW;
+      priceFieldElement.placeholder = MIN_VALUE_BUNGALOW;
       break;
     case 'flat':
-      priceField.min = MIN_VALUE_FLAT;
-      priceField.placeholder = MIN_VALUE_FLAT;
+      priceFieldElement.min = MIN_VALUE_FLAT;
+      priceFieldElement.placeholder = MIN_VALUE_FLAT;
       break;
     case 'hotel':
-      priceField.min = MIN_VALUE_HOTEL;
-      priceField.placeholder = MIN_VALUE_HOTEL;
+      priceFieldElement.min = MIN_VALUE_HOTEL;
+      priceFieldElement.placeholder = MIN_VALUE_HOTEL;
       break;
     case 'house':
-      priceField.min = MIN_VALUE_HOUSE;
-      priceField.placeholder = MIN_VALUE_HOUSE;
+      priceFieldElement.min = MIN_VALUE_HOUSE;
+      priceFieldElement.placeholder = MIN_VALUE_HOUSE;
       break;
     case 'palace':
-      priceField.min = MIN_VALUE_PALACE;
-      priceField.placeholder = MIN_VALUE_PALACE;
+      priceFieldElement.min = MIN_VALUE_PALACE;
+      priceFieldElement.placeholder = MIN_VALUE_PALACE;
       break;
   }
 };
 
-changePriceFromType(typeField.value);
+changePriceFromType(typeFieldElement.value);
 
 const validateTitle = (value) => (
   value.length > MIN_LENGTH-1 && value.length < MAX_LENGTH+1
@@ -93,36 +93,36 @@ pristine.addValidator(
 );
 
 const validatePrice = (value) => (
-  value < MAX_PRICE+1 && value > Number(priceField.min)-1
+  value < MAX_PRICE+1 && value > Number(priceFieldElement.min)-1
 );
 
 pristine.addValidator(
-  priceField,
+  priceFieldElement,
   validatePrice,
   'Неподходящее значение цены'
 );
 
 const validateRooms = () => (
-  roomGuestCapacity[roomsField.value].includes(guestsField.value)
+  roomGuestCapacity[roomsFieldElement.value].includes(guestsFieldElement.value)
 );
 
 const getRoomsErrorMessage = () =>  (
-  Number(roomsField.value) === Number(RoomsValue.HUNDRED) ? 'Комнаты не для гостей' : 'Недостаточно места для размещения всех гостей'
+  Number(roomsFieldElement.value) === Number(RoomsValue.HUNDRED) ? 'Комнаты не для гостей' : 'Недостаточно места для размещения всех гостей'
 );
 
-pristine.addValidator(guestsField, validateRooms, getRoomsErrorMessage);
+pristine.addValidator(guestsFieldElement, validateRooms, getRoomsErrorMessage);
 
-typeField.addEventListener('change', () =>{
-  changePriceFromType(typeField.value);
+typeFieldElement.addEventListener('change', () =>{
+  changePriceFromType(typeFieldElement.value);
 });
 
 
-timeInSelect.addEventListener('change', () => {
-  timeOutSelect.value = timeInSelect.value;
+timeInSelectElement.addEventListener('change', () => {
+  timeOutSelectElement.value = timeInSelectElement.value;
 });
 
-timeOutSelect.addEventListener('change', () => {
-  timeInSelect.value = timeOutSelect.value;
+timeOutSelectElement.addEventListener('change', () => {
+  timeInSelectElement.value = timeOutSelectElement.value;
 });
 
 const onSubmitAdForm = (onSuccess, onFail) => {
@@ -141,17 +141,17 @@ const onSubmitAdForm = (onSuccess, onFail) => {
 
 const resetForm = () => {
   adForm.reset();
-  changePriceFromType(typeField.value);
+  changePriceFromType(typeFieldElement.value);
   resetAddress();
-  previewAvatarContainer.src = PREVIEW_FIRST_STARTING;
-  previewHousingPhotoChooser.innerHTML = '';
-  filterForm.reset();
+  previewAvatarContainerElement.src = PREVIEW_FIRST_STARTING;
+  previewHousingPhotoChooserElement.innerHTML = '';
+  filterFormElement.reset();
   sliderElement.noUiSlider.set(0);
 };
 
 resetForm();
 
-resetButton.addEventListener('click', (evt) => {
+resetButtonElement.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm();
 });

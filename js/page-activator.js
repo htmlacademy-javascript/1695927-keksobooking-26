@@ -1,5 +1,5 @@
-const adForm = document.querySelector('.ad-form');
-const mapFilter = document.querySelector('.map__filters');
+const adFormElement = document.querySelector('.ad-form');
+const mapFilterElement = document.querySelector('.map__filters');
 const elementsForDisabling = document.querySelectorAll('fieldset , select.map__filter');
 
 const elementDisable = () => {
@@ -8,9 +8,9 @@ const elementDisable = () => {
   });
 };
 
-const pageActivator = () => {
-  adForm.classList.toggle('ad-form--disabled');
-  mapFilter.classList.toggle('.map__filters--disabled');
+const makeActivePage = () => {
+  adFormElement.classList.toggle('ad-form--disabled');
+  mapFilterElement.classList.toggle('.map__filters--disabled');
   elementDisable();
 };
 
@@ -18,4 +18,4 @@ const filterActivator = () =>{
   elementDisable();
 };
 
-export {pageActivator, filterActivator};
+export {makeActivePage, filterActivator};

@@ -16,7 +16,7 @@ const housingPrice = {
   },
 };
 
-const filters = Array.from(document.querySelector('.map__filters').children);
+const filtersElements = Array.from(document.querySelector('.map__filters').children);
 
 const filterRules = {
   'housing-type': (data, filter) => (filter.value === data.offer.type),
@@ -24,8 +24,8 @@ const filterRules = {
   'housing-rooms': (data, filter) => (filter.value === data.offer.rooms.toString()),
   'housing-guests': (data, filter) => (filter.value === data.offer.guests.toString()),
   'housing-features': (data, filter) => {
-    const checkedCheckboxes = Array.from(filter.querySelectorAll('input[type="checkbox"]:checked'));
-    return data.offer.features ? checkedCheckboxes.every((checkbox) => data.offer.features.includes(checkbox.value)) : !(checkedCheckboxes.length > 0);
+    const checkedCheckboxesElements = Array.from(filter.querySelectorAll('input[type="checkbox"]:checked'));
+    return data.offer.features ? checkedCheckboxesElements.every((checkbox) => data.offer.features.includes(checkbox.value)) : !(checkedCheckboxesElements.length > 0);
   },
 };
 
@@ -34,7 +34,7 @@ const filterOffers = (data) => {
   offers = [];
   let result;
   for (let i = 0; i < data.length && offers.length < MAX_OFFERS; i++) {
-    result = filters.every((filter) => (
+    result = filtersElements.every((filter) => (
       filter.value === DEFAULT_VALUE ? true : filterRules[filter.id](data[i], filter)
     ));
     if (result) {
