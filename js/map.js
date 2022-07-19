@@ -1,6 +1,6 @@
-import {pageActivator} from './pageActivator.js';
+import {makeActivePage} from './page-activator.js';
 import {getAddress, onError, debounce} from './util.js';
-import {setAddressFieldValue} from './userForm.js';
+import {setAddressFieldValue} from './user-form.js';
 import {renderCard} from './card.js';
 import {doRequest} from './api.js';
 import {filterOffers} from './filter.js';
@@ -10,7 +10,7 @@ const TOKYO = { lat: 35.65283, lng: 139.83948 };
 const MAP_ZOOM = 12;
 const MAX_OFFERS = 10;
 const RENDER_DELAY = 500;
-const filterForm = document.querySelector('.map__filters');
+const filterFormElement = document.querySelector('.map__filters');
 
 const map = L.map('map-canvas');
 
@@ -85,12 +85,12 @@ const onFilterReset = () => {
 const onSuccess = (data) => {
   offersData = data.slice();
   renderOffers(offersData.slice(0, MAX_OFFERS));
-  filterForm.addEventListener('change', onFilterChange);
-  filterForm.addEventListener('reset', onFilterReset);
+  filterFormElement.addEventListener('change', onFilterChange);
+  filterFormElement.addEventListener('reset', onFilterReset);
 };
 
 map.on('load', () => {
-  pageActivator();
+  makeActivePage();
   doRequest(onSuccess, onError, 'GET');
 })
   .setView({

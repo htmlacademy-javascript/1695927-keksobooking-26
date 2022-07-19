@@ -1,10 +1,10 @@
-import {filterActivator} from './pageActivator.js';
+import {filterActivator} from './page-activator.js';
 
 const ALERT_SHOW_TIME = 2000;
 
 const ERRORMESSAGE = 'Ошибка загрузки данных. Обновите страницу.';
 
-const switchingOfTypesHousing = (type) => {
+const changeOfTypesHousing = (type) => {
   switch (type) {
     case 'hotel':
       return 'Отель';
@@ -16,17 +16,6 @@ const switchingOfTypesHousing = (type) => {
       return 'Бунгало';
     case 'flat':
       return 'Квартира';
-  }
-};
-
-const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
-  switch (true) {
-    case (num % 100 > 10 && num % 100 < 21) || (num % 10 > 4 && num % 10 < 10) || (num % 10 === 0):
-      return genitivePlural;
-    case num % 10 === 1:
-      return nominative;
-    case num % 10 > 1 && num % 10 < 5:
-      return genitiveSingular;
   }
 };
 
@@ -60,8 +49,8 @@ const onPopupClick = () => {
 };
 
 const showSuccessMessage = () => {
-  const successTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successMessage = successTemplate.cloneNode(true);
+  const successTemplateElement = document.querySelector('#success').content.querySelector('.success');
+  const successMessage = successTemplateElement.cloneNode(true);
   successMessage.style.zIndex = 1000;
   document.querySelector('main').append(successMessage);
   document.addEventListener('keydown', onPopupEscKeydown);
@@ -69,8 +58,8 @@ const showSuccessMessage = () => {
 };
 
 const showErrorMessage = (message) => {
-  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorMessage = errorTemplate.cloneNode(true);
+  const errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
+  const errorMessage = errorTemplateElement.cloneNode(true);
   errorMessage.style.zIndex = 1000;
   if (message) {
     errorMessage.querySelector('p').textContent = message;
@@ -80,13 +69,14 @@ const showErrorMessage = (message) => {
   document.addEventListener('click', onPopupClick);
 };
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay) => {
   let timeoutId;
+
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 const onError = () => {
   const alertContainer = document.createElement('div');
@@ -111,8 +101,7 @@ const onError = () => {
 };
 
 export {
-  switchingOfTypesHousing,
-  numDecline,
+  changeOfTypesHousing,
   getAddress,
   showErrorMessage,
   showSuccessMessage,
